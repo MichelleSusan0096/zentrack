@@ -10,6 +10,7 @@ import { MOCK_DISTRICTS, MOCK_TRAINEE } from '@/data/mockData'
 
 import { AuthContainer } from '@/components/auth/AuthContainer'
 import { OAuthLoginPage } from '@/components/auth/OAuthLoginPage'
+import { GoogleCallbackPage } from '@/components/auth/GoogleCallbackPage'
 import { Header } from '@/components/common/Header'
 import { UpdateStatusModal } from '@/components/common/UpdateStatusModal'
 import { GovernmentDashboard } from '@/components/government/GovernmentDashboard'
@@ -44,6 +45,8 @@ export function App() {
     const pathname = window.location.pathname
     if (pathname.includes('/auth/callback/')) {
       setIsOAuthCallback(true)
+    } else if (pathname.includes('/auth/google-callback')) {
+      setIsOAuthCallback(true)
     }
   }, [])
 
@@ -74,6 +77,19 @@ export function App() {
 
   // Show OAuth callback page if OAuth callback
   if (isOAuthCallback) {
+    const pathname = window.location.pathname
+    if (pathname.includes('/auth/google-callback')) {
+      return (
+        <GoogleCallbackPage
+          onLoginSuccess={handleAuthSuccess}
+          onError={(error) => {
+            console.error('Google OAuth error:', error)
+            setIsOAuthCallback(false)
+          }}
+        />
+      )
+    }
+    
     return (
       <OAuthLoginPage
         onOAuthSuccess={handleAuthSuccess}

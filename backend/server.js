@@ -95,8 +95,8 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'ZENTrack backend is running' })
 })
 
-// Google OAuth Callback
-app.post('/api/auth/google', async (req, res) => {
+// Google OAuth Callback Handler
+app.post('/api/auth/google/callback', async (req, res) => {
   try {
     const { code } = req.body
 
@@ -188,30 +188,11 @@ app.post('/api/auth/google', async (req, res) => {
     })
 
   } catch (error) {
-    console.error('OAuth error:', error.message)
+    console.error('OAuth callback error:', error.message)
     
-    // Record failed login
-    const loginId = generateId()
-    await db.run(
-      'INSERT INTO login_records (id, userId, email, fullName, authMethod, role, loginTime, status, errorMessage, ipAddress, userAgent) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-      [
-        loginId,
-        'unknown',
-        'unknown',
-        'Unknown',
-        'google',
-        'unknown',
-        new Date().toISOString(),
-        'failed',
-        error.message,
-        req.ip || 'unknown',
-        req.get('user-agent') || 'unknown'
-      ]
-    )
-
     res.status(500).json({ error: 'OAuth authentication failed', details: error.message })
   }
-})
+}))
 
 // Email/Password Login
 app.post('/api/auth/login', async (req, res) => {
