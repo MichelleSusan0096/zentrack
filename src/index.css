@@ -1,0 +1,82 @@
+/**
+ * Global styles and custom utilities
+ */
+
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@600;700;800&display=swap');
+
+/* Base Styles */
+* {
+  @apply antialiased;
+}
+
+body {
+  background-color: #070913;
+  color: #f1f5f9;
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+}
+
+/* Glass-morphism components */
+.glass-panel {
+  background: rgba(14, 18, 36, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(192, 132, 252, 0.15);
+}
+
+.glass-card {
+  background: rgba(20, 26, 56, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(192, 132, 252, 0.12);
+}
+
+/* Glow effects */
+.magenta-glow {
+  box-shadow: 0 0 25px -5px rgba(217, 70, 239, 0.35);
+}
+
+.yellow-glow {
+  box-shadow: 0 0 25px -5px rgba(234, 179, 8, 0.35);
+}
+
+/* Gradient Text */
+.gradient-text {
+  background: linear-gradient(135deg, #f5d0fe 0%, #d946ef 50%, #eab308 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #070913;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e2752;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #d946ef;
+}
+
+/* Selection styling */
+::selection {
+  background-color: rgb(217, 70, 239);
+  color: white;
+}
+
+::-moz-selection {
+  background-color: rgb(217, 70, 239);
+  color: white;
+}

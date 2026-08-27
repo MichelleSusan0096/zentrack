@@ -1,0 +1,4 @@
+/**
+ * Authentication type definitions
+ */
+export {};

@@ -1,0 +1,15 @@
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+export function UpdateStatusModal({ isOpen, onClose, onSubmit }) {
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.currentTarget);
+        onSubmit({
+            status: formData.get('status'),
+            company: formData.get('company'),
+            salary: formData.get('salary'),
+        });
+    };
+    if (!isOpen)
+        return null;
+    return (_jsx("div", { className: "fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4", children: _jsxs("div", { className: "glass-panel p-6 sm:p-8 rounded-3xl max-w-lg w-full border border-yellow-500/40 space-y-6", children: [_jsxs("div", { className: "flex justify-between items-center border-b border-indigo-900 pb-4", children: [_jsxs("h3", { className: "text-lg font-extrabold text-white flex items-center gap-2", children: [_jsx("i", { className: "fa-solid fa-pen-to-square text-yellow-400" }), " Trainee Status Signal Update"] }), _jsx("button", { onClick: onClose, className: "text-slate-400 hover:text-white text-lg", children: _jsx("i", { className: "fa-solid fa-xmark" }) })] }), _jsxs("form", { onSubmit: handleSubmit, className: "space-y-4 text-xs", children: [_jsxs("div", { children: [_jsx("label", { className: "block text-indigo-300 font-semibold mb-1", children: "Employment Status" }), _jsxs("select", { name: "status", defaultValue: "Wage Employed", className: "w-full bg-indigo-950 border border-indigo-800 text-slate-200 rounded-xl p-2.5 focus:outline-none focus:border-fuchsia-500", children: [_jsx("option", { children: "Wage Employed" }), _jsx("option", { children: "Self-Employed / Entrepreneur" }), _jsx("option", { children: "Apprenticeship" }), _jsx("option", { children: "Seeking Opportunities" })] })] }), _jsxs("div", { children: [_jsx("label", { className: "block text-indigo-300 font-semibold mb-1", children: "Employer / Company Name" }), _jsx("input", { type: "text", name: "company", defaultValue: "ABC Technologies", className: "w-full bg-indigo-950 border border-indigo-800 text-slate-200 rounded-xl p-2.5 focus:outline-none focus:border-fuchsia-500" })] }), _jsxs("div", { children: [_jsx("label", { className: "block text-indigo-300 font-semibold mb-1", children: "Monthly Remuneration (\u20B9)" }), _jsx("input", { type: "number", name: "salary", defaultValue: "32000", className: "w-full bg-indigo-950 border border-indigo-800 text-slate-200 rounded-xl p-2.5 focus:outline-none focus:border-fuchsia-500" })] }), _jsxs("div", { className: "flex justify-end gap-3 pt-4 border-t border-indigo-900", children: [_jsx("button", { type: "button", onClick: onClose, className: "px-4 py-2 rounded-xl text-slate-300 hover:bg-indigo-950 text-xs font-bold", children: "Cancel" }), _jsx("button", { type: "submit", className: "px-5 py-2.5 rounded-xl bg-gradient-to-r from-fuchsia-600 to-purple-600 text-white font-bold text-xs shadow-lg magenta-glow hover:opacity-90", children: "Submit Verified Signal" })] })] })] }) }));
+}
