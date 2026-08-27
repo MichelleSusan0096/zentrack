@@ -125,6 +125,26 @@ export function LoginPage({ onLoginSuccess, onSignUpClick, onForgotPasswordClick
     return errors.find((err) => err.field === fieldName)?.message || null
   }
 
+  const handleGoogleLogin = async () => {
+    try {
+      setIsLoading(true)
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback/google`,
+        },
+      })
+
+      if (error) {
+        throw error
+      }
+    } catch (error) {
+      console.error('Google OAuth error:', error)
+      setGeneralError('Google login failed. Please try email login instead.')
+      setIsLoading(false)
+    }
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#070913] via-[#0c1024] to-[#141a38] flex items-center justify-center px-4">
       {/* Background Elements */}
@@ -276,6 +296,27 @@ export function LoginPage({ onLoginSuccess, onSignUpClick, onForgotPasswordClick
               </p>
             </div>
           </div>
+
+          {/* Divider */}
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-indigo-900/50"></div>
+            </div>
+            <div className="relative flex justify-center text-xs">
+              <span className="px-2 bg-indigo-950/50 text-indigo-400">Or continue with</span>
+            </div>
+          </div>
+
+          {/* Google Button */}
+          <button
+            type="button"
+            onClick={handleGoogleLogin}
+            disabled={isLoading}
+            className="w-full px-4 py-2.5 rounded-xl border border-indigo-800/50 bg-indigo-950/40 hover:bg-indigo-950/80 text-white font-semibold text-xs flex items-center justify-center gap-2 transition-all disabled:opacity-50"
+          >
+            {isLoading ? <i className="fa-solid fa-spinner animate-spin"></i> : <i className="fa-brands fa-google text-red-400"></i>}
+            Sign in with Google
+          </button>
 
           {/* Divider */}
           <div className="relative">
