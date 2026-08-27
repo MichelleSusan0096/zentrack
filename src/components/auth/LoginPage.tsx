@@ -128,19 +128,41 @@ export function LoginPage({ onLoginSuccess, onSignUpClick, onForgotPasswordClick
   const handleGoogleLogin = async () => {
     try {
       setIsLoading(true)
+      setGeneralError('')
+      
+      console.log('Starting Google OAuth flow...')
+      
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/auth/callback/google`,
+          redirectTo: `${window.location.origin}`,
+          queryParams: {
+            access_type: 'offline',
+            prompt: 'consent',
+          },
         },
       })
 
       if (error) {
+        console.error('OAuth Error Details:', {
+          message: error.message,
+          status: (error as any).status,
+        })
         throw error
       }
     } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Google login failed'
       console.error('Google OAuth error:', error)
-      setGeneralError('Google login failed. Please try email login instead.')
+      
+      // More detailed error message
+      if (errorMessage.includes('invalid_client')) {
+        setGeneralError('Google OAuth not properly configured. Please contact support.')
+      } else if (errorMessage.includes('redirect_uri')) {
+        setGeneralError('OAuth redirect configuration issue. Please try again.')
+      } else {
+        setGeneralError(`Google login error: ${errorMessage}`)
+      }
+      
       setIsLoading(false)
     }
   }
